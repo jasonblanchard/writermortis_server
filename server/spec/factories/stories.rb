@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :story do
-    user nil
-title "MyString"
-total_pieces 1
-max_sentences 1
+    user
+    title "MyString"
+    total_pieces 3
+    max_sentences 1
   end
-
 end

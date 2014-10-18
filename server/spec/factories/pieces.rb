@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :piece do
-    story nil
-user nil
-text "MyText"
+    story
+    user
+    text "MyText"
   end
-
 end

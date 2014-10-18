@@ -3,4 +3,10 @@ class Api::V1::StoriesController < ApplicationController
     @stories = Story.sorted
     render :json => @stories
   end
+
+  def show
+    @story = Story.find(params[:id])
+
+    render :json => @story
+  end
 end

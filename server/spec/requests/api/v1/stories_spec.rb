@@ -14,4 +14,26 @@ describe 'Stories API' do
     end
   end
 
+  describe 'show' do
+    let(:story) { FactoryGirl.create(:story) }
+
+    it 'returns a story' do
+
+      get "/api/v1/stories/#{story.id}"
+
+      expect(json['story']['title']).to eq story.title
+    end
+
+    context 'when the story has pieces' do
+
+      let!(:piece) { FactoryGirl.create(:piece, :story => story) }
+
+      it 'sideloads the pieces' do
+        get "/api/v1/stories/#{story.id}"
+
+        expect(json['pieces'].first['text']).to eq piece.text
+      end
+    end
+  end
+
 end

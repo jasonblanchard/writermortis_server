@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :piece do
     story
     user
-    text "MyText"
+    text "Once upon a time..."
   end
 end

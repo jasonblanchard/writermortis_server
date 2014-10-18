@@ -15,6 +15,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'factory_girl_rails'
 require 'database_cleaner'
@@ -37,6 +38,7 @@ RSpec.configure do |config|
   end
 
   config.include Requests::JsonHelpers, type: :request
+  config.include Devise::TestHelpers, type: :controller
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.

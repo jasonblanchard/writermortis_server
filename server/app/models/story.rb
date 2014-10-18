@@ -7,4 +7,6 @@ class Story < ActiveRecord::Base
   has_many :pieces
   belongs_to :user
 
+  scope :sorted, -> { order('created_at DESC') }
+
 end

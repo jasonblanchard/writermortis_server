@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018130215) do
+ActiveRecord::Schema.define(version: 20141018133635) do
 
   create_table "stories", force: true do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.integer  "total_pieces"
-    t.integer  "max_sentences"
+    t.integer  "total_pieces",  default: 6
+    t.integer  "max_sentences", default: 3
     t.datetime "created_at"
     t.datetime "updated_at"
   end

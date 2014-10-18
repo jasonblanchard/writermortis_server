@@ -8,6 +8,7 @@ RSpec.describe Story, :type => :model do
   it { should validate_numericality_of(:total_pieces).is_less_than(99) }
   it { should validate_numericality_of(:max_sentences).is_less_than(15) }
   it { should validate_presence_of(:user) }
+  it { should have_many :pieces }
 
   describe "has default values for" do
     it "total_pieces" do

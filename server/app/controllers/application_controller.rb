@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_filter :authenticate_user_from_token!
+  include Pundit
 
   private
 

@@ -73,7 +73,14 @@ describe 'Stories API' do
     let(:story) { FactoryGirl.create(:story, :user => user) }
 
     context 'when the user is not autorized to edit the story' do
-      skip
+
+      let(:user2) { FactoryGirl.create(:user) }
+
+      it 'returns 401 status code' do
+        patch "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token, :story => {:title => 'Updated title'}
+
+        expect(response.status).to eq 401
+      end
     end
 
     context 'when the user is authorized to edit the story' do
@@ -125,7 +132,13 @@ describe 'Stories API' do
     end
 
     context 'when the user is not authorized to delete the story' do
-      skip
+      let(:user2) { FactoryGirl.create(:user) }
+
+      it 'returns 401 status code' do
+        delete "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token
+
+        expect(response.status).to eq 401
+      end
     end
 
   end

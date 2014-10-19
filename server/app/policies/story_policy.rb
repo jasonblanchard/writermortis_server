@@ -17,7 +17,9 @@ class StoryPolicy
   private
 
   def is_owner?(user, resource)
-    user.id == resource.user_id
+    if user
+      user.id == resource.user_id
+    end
   end
 
 end

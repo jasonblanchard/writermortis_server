@@ -17,10 +17,11 @@ describe 'Stories API' do
   describe 'show' do
     let(:story) { FactoryGirl.create(:story) }
 
-    it 'returns a story' do
-
+    before do
       get "/api/v1/stories/#{story.id}"
+    end
 
+    it 'returns a story' do
       expect(json['story']['title']).to eq story.title
     end
 
@@ -39,30 +40,30 @@ describe 'Stories API' do
   describe 'create' do
     let(:user) { FactoryGirl.create(:user) }
 
-    it 'returns 201 status code' do
+    before do
       post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => "This is my story" }
+    end
 
+    it 'returns 201 status code' do
       expect(response.status).to eq 201
     end
 
     it 'creates a new story and returns the story object' do
-      post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => "This is my story" }
-
       story = Story.last
       expect(story.title).to eq "This is my story"
       expect(json['story']['title']).to eq "This is my story"
     end
 
     context 'when there is a validation error' do
-      it 'has a 400 status code' do
+      before do
         post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
-
+      end
+      
+      it 'has a 400 status code' do
         expect(response.status).to eq 400
       end
 
       it 'returns an errors object' do
-        post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
-
         expect(json['errors']).to be_a Array
       end
     end
@@ -74,40 +75,46 @@ describe 'Stories API' do
 
     context 'when the user is not autorized to edit the story' do
 
+      before do
+        patch "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token, :story => {:title => 'Updated title'}
+      end
+
       let(:user2) { FactoryGirl.create(:user) }
 
       it 'returns 401 status code' do
-        patch "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token, :story => {:title => 'Updated title'}
+        expect(response.status).to eq 401
+      end
 
+      it 'returns 401 when the user is not authenticated' do
         expect(response.status).to eq 401
       end
     end
 
     context 'when the user is authorized to edit the story' do
 
-      it 'returns a 200 status code' do
+      before do
         patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => 'Updated title'}
+      end
 
+      it 'returns a 200 status code' do
         expect(response.status).to eq 200
       end
 
       it 'updates the story and returns the story json' do
-        patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => 'Updated title'}
-
         expect(story.reload.title).to eq "Updated title"
         expect(json['story']['title']).to eq 'Updated title'
       end
 
       context 'when there is a validation error' do
-        it 'returns a 400 status code' do
+        before do
           patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+        end
 
+        it 'returns a 400 status code' do
           expect(response.status).to eq 400
         end
 
         it 'returns an errors object' do
-          patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
-
           expect(json['errors']).to be_a Array
         end
       end
@@ -119,14 +126,14 @@ describe 'Stories API' do
     let(:story) { FactoryGirl.create(:story, :user => user) }
 
     context 'when the user is authorized to delete the story' do
-      it 'returns a 200 status code' do
+      before do
         delete "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token
+      end
 
+      it 'returns a 200 status code' do
         expect(response.status).to eq 200
       end
       it 'deletes the story' do
-        delete "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token
-
         expect(Story.all.count).to eq 0
       end
     end
@@ -139,8 +146,11 @@ describe 'Stories API' do
 
         expect(response.status).to eq 401
       end
+
+      it 'returns 401 when the user is not authenticated' do
+        delete "/api/v1/stories/#{story.id}"
+        expect(response.status).to eq 401
+      end
     end
-
   end
-
 end

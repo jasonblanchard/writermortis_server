@@ -1,11 +1,13 @@
 class Api::V1::StoriesController < ApplicationController
+  
+  before_action :get_story, :only => [:show, :update, :destroy]
+
   def index
     @stories = Story.sorted
     render :json => @stories
   end
 
   def show
-    @story = Story.find(params[:id])
     render :json => @story
   end
 
@@ -20,7 +22,6 @@ class Api::V1::StoriesController < ApplicationController
   end
 
   def update
-    @story = current_user.stories.find(params[:id])
     @story.update(story_params)
 
     if @story.save
@@ -30,10 +31,20 @@ class Api::V1::StoriesController < ApplicationController
     end
   end
 
+  def destroy
+    @story.destroy
+
+    render :json => { :deleted => true }
+  end
+
   private
 
   def story_params
     params.require(:story).permit(:title, :total_pieces, :max_sentences)
+  end
+
+  def get_story
+    @story = Story.find(params[:id])
   end
 end
 

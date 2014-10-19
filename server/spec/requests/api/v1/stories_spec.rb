@@ -37,21 +37,33 @@ describe 'Stories API' do
   end
 
   describe 'create' do
+    let(:user) { FactoryGirl.create(:user) }
+
     it 'returns 201 status code' do
-      skip
+      post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => "This is my story" }
+
+      expect(response.status).to eq 201
     end
 
     it 'creates a new story and returns the story object' do
-      skip
+      post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => "This is my story" }
+
+      story = Story.last
+      expect(story.title).to eq "This is my story"
+      expect(json['story']['title']).to eq "This is my story"
     end
 
     context 'when there is a validation error' do
       it 'has a 400 status code' do
-        skip
+        post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+
+        expect(response.status).to eq 400
       end
 
       it 'returns an errors object' do
-        skip
+        post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+
+        expect(json['errors']).to be_a Array
       end
     end
   end

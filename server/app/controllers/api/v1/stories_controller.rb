@@ -13,9 +13,9 @@ class Api::V1::StoriesController < ApplicationController
     @story = current_user.stories.new(story_params)
 
     if @story.save
-      #render :json => @story, :status => 201
+      render :json => @story, :status => 201
     else
-      #render :json => { :errors => @story.errors.full_messages }, :status => 400
+      render :json => { :errors => @story.errors.full_messages }, :status => 400
     end
   end
 

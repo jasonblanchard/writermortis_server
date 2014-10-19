@@ -36,4 +36,24 @@ describe 'Stories API' do
     end
   end
 
+  describe 'create' do
+    it 'returns 201 status code' do
+      skip
+    end
+
+    it 'creates a new story and returns the story object' do
+      skip
+    end
+
+    context 'when there is a validation error' do
+      it 'has a 400 status code' do
+        skip
+      end
+
+      it 'returns an errors object' do
+        skip
+      end
+    end
+  end
+
 end

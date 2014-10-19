@@ -19,6 +19,17 @@ class Api::V1::StoriesController < ApplicationController
     end
   end
 
+  def update
+    @story = current_user.stories.find(params[:id])
+    @story.update(story_params)
+
+    if @story.save
+      render :json => @story
+    else
+      render :json => { :errors => @story.errors.full_messages }, :status => 400
+    end
+  end
+
   private
 
   def story_params

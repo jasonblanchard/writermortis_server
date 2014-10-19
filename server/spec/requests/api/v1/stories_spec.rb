@@ -68,4 +68,36 @@ describe 'Stories API' do
     end
   end
 
+  describe 'update' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:story) { FactoryGirl.create(:story, :user => user) }
+
+    it 'returns a 200 status code' do
+      patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => 'Updated title'}
+
+      expect(response.status).to eq 200
+    end
+
+    it 'updates the story and returns the story json' do
+      patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => 'Updated title'}
+
+      expect(story.reload.title).to eq "Updated title"
+      expect(json['story']['title']).to eq 'Updated title'
+    end
+
+    context 'when there is a valudation error' do
+      it 'returns a 400 status code' do
+        patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+
+        expect(response.status).to eq 400
+      end
+
+      it 'returns an errors object' do
+        patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+
+        expect(json['errors']).to be_a Array
+      end
+    end
+  end
+
 end

@@ -11,5 +11,9 @@ RSpec.describe Piece, :type => :model do
     it 'does not validate if there are too many sentences' do
       skip "Not implemented yet"
     end
+
+    it 'does not validate if the user posted the last piece' do
+      skip "Not implemented yet"
+    end
   end
 end

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   before_filter :authenticate_user_from_token!
   include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
@@ -18,5 +19,9 @@ class ApplicationController < ActionController::API
   # https://github.com/rails-api/rails-api/issues/24
   def self.mimes_for_respond_to
     [1]
+  end
+
+  def user_not_authorized
+    render :json => { :user => "Not Authorized" }, :status => 401
   end
 end

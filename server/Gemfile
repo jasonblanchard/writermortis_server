@@ -5,7 +5,10 @@ gem 'rails', '4.1.1'
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
+group :development do
+  gem 'spring'
+  gem "bullet"
+end
 
 gem 'sqlite3'
 
@@ -22,6 +25,10 @@ group :test, :development do
   gem "shoulda-matchers"
   gem 'capybara'
   gem 'database_cleaner'
+end
+
+group :test do
+  gem 'simplecov', :require => false
 end
 
 gem 'debugger', :group => :development

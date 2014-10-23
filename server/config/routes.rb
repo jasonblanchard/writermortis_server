@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'sessions' }
 
-  namespace :api do
+  namespace :api, :defaults => { :format => :json } do
     namespace :v1 do
       resources 'stories' do
         resources 'pieces', :only => [:create]

@@ -1,7 +1,7 @@
 class Api::V1::StoriesController < ApplicationController
-  
+
+  before_filter :authenticate_user!, :only => [:create, :update, :destroy]
   before_action :get_story, :only => [:show, :update, :destroy]
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def index
     @stories = Story.sorted
@@ -51,8 +51,5 @@ class Api::V1::StoriesController < ApplicationController
     @story = Story.find(params[:id])
   end
 
-  def user_not_authorized
-    render :json => { :user => "Not Authorized" }, :status => 401
-  end
 end
 

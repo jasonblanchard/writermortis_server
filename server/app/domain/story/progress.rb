@@ -5,7 +5,11 @@ class Story
     end
 
     def complete?
-      @story.pieces.length == @story.total_pieces
+      if @story
+        @story.pieces.length == @story.total_pieces
+      else
+        false
+      end
     end
   end
 end

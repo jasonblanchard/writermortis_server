@@ -7,13 +7,27 @@ RSpec.describe Piece, :type => :model do
   it { should validate_presence_of :user }
   it { should validate_presence_of :text }
 
-  describe 'validates :does_not_excede_max_sentences' do
+  describe 'validations' do
     it 'does not validate if there are too many sentences' do
       skip "Not implemented yet"
     end
 
-    it 'does not validate if the user posted the last piece' do
-      skip "Not implemented yet"
+    context 'when the same user posted the last piece' do
+      it 'does not validate' do
+        skip
+      end
+    end
+
+    context 'when the story has all the pieces' do
+      it 'does not validate' do
+        skip
+      end
+    end
+
+    context 'when the story has too many sentences' do
+      it 'does not validate' do
+        skip
+      end
     end
   end
 end

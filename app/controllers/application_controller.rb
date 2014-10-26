@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
-  before_filter :authenticate_user_from_token!
   include Pundit
+
+  before_filter :authenticate_user_from_token!
+  after_filter :cors_set_access_control_headers, :if => :in_dev
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
@@ -24,4 +26,16 @@ class ApplicationController < ActionController::API
   def user_not_authorized
     render :json => { :user => "Not Authorized" }, :status => 401
   end
+
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin']      = '*'
+    headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'
+    headers['Access-Control-Max-Age']           = '1728000'
+    headers['Access-Control-Allow-Credentials'] = 'true'
+  end
+
+  def in_dev
+    Rails.env == "development"
+  end
+
 end

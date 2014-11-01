@@ -3,4 +3,8 @@ class StorySerializer < ActiveModel::Serializer
   has_many :pieces
 
   attributes :id, :title, :total_pieces, :max_sentences
+
+  def pieces
+    object.pieces.includes(:user)
+  end
 end

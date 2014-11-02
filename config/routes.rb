@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
-
+  
+  match '*path', :controller => 'application', :action => 'handle_options_request', via: [:options]
+  
   devise_for :users, controllers: { sessions: 'sessions' }
 
   namespace :api, :defaults => { :format => :json } do
     namespace :v1 do
       resources 'users', :only => [:show]
-      resources 'stories' do
-        resources 'pieces', :only => [:create]
-      end
+      resources 'stories'
+      resources 'pieces', :only => [:create]
     end
   end
 

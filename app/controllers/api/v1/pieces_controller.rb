@@ -3,7 +3,6 @@ class Api::V1::PiecesController < ApplicationController
   before_filter :authenticate_user!, :only => [:create]
 
   def create
-    @story = Story.find(params[:story_id])
     @piece = current_user.pieces.new(piece_params)
 
     authorize @piece
@@ -19,7 +18,7 @@ class Api::V1::PiecesController < ApplicationController
   private
 
   def piece_params
-    params.require(:piece).permit(:text).merge(:story_id => params[:story_id])
+    params.require(:piece).permit(:text, :created_at, :updated_at, :story_id)
   end
 
 end

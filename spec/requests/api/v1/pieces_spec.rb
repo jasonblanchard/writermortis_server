@@ -8,10 +8,11 @@ describe 'Pieces API' do
     context 'when the user is authorized to create a piece' do
  
       before do
-        post "/api/v1/stories/#{story.id}/pieces", :piece => {:text => "Once upon a time" }, :user_email => user.email, :user_token => user.authentication_token
+        post "/api/v1/pieces", :piece => {:text => "Once upon a time", :story_id => story.id}, :user_email => user.email, :user_token => user.authentication_token
       end
 
       it 'creates the piece for the story' do
+        expect(response.status).to eq 200
         piece = story.pieces.last
         expect(piece.story).to eq story
         expect(piece.text).to eq "Once upon a time"
@@ -25,7 +26,7 @@ describe 'Pieces API' do
 
     context 'when there is a validation error' do
       before do
-        post "/api/v1/stories/#{story.id}/pieces", :piece => {:text => "" }, :user_email => user.email, :user_token => user.authentication_token
+        post "/api/v1/pieces", :piece => {:text => "" }, :user_email => user.email, :user_token => user.authentication_token
       end
 
       it 'returns a 400 status code' do
@@ -40,7 +41,7 @@ describe 'Pieces API' do
 
     context 'when the user is not authenticated' do
       before do
-        post "/api/v1/stories/#{story.id}/pieces", :piece => {:text => "" }
+        post "/api/v1/pieces", :piece => {:text => "" }
       end
 
       it 'returns 401 status code' do

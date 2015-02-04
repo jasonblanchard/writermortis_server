@@ -12,7 +12,11 @@ class SentenceCounter
   private
 
   def sub
-    @string.gsub(/Mr\.|Mrs\.|Ms\.|Dr\.|[\?|\!|\.]["|']/, '#')
+    if @string
+      @string.gsub(/Mr\.|Mrs\.|Ms\.|Dr\.|[\?|\!|\.]["|']/, '#')
+    else
+      ''
+    end
   end
 
 end

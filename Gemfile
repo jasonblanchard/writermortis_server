@@ -25,6 +25,7 @@ group :test, :development do
   gem "shoulda-matchers"
   gem 'capybara'
   gem 'database_cleaner'
+  gem "byebug"
 end
 
 group :test do

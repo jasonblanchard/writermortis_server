@@ -1,7 +1,7 @@
 class PieceValidator::HasAllPieces < ActiveModel::Validator
 
   def validate(piece)
-    if story_is_already_complete?(piece)
+    if !piece.persisted? && story_is_already_complete?(piece)
       piece.errors[:piece] << "The story is already complete!"
     end
   end

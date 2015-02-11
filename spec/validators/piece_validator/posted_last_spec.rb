@@ -16,5 +16,20 @@ describe PieceValidator::PostedLast do
         expect(new_piece.errors.messages[:piece]).to include "You posted the last piece of this story!"
       end
     end
+
+    context "When updating an existing piece" do
+      let(:user2) { FactoryGirl.create(:user) }
+
+      before do
+        story.pieces << FactoryGirl.create(:piece, :user => user)
+        story.pieces << FactoryGirl.create(:piece, :user => user2)
+      end
+
+      it "does not return errors" do
+
+        existing_piece = story.pieces.last
+        expect(existing_piece.valid?).to eq true
+      end
+    end
   end
 end

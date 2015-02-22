@@ -7,7 +7,7 @@ class Pieces::CreateService
   def save
     if piece = @piece.save
       msg = { :resource => 'piece', :action => 'create', :data => @piece }
-      $redis.publish 'rt-change', msg.to_json
+      RedisService.new.publish 'rt-change', msg.to_json
     end
 
     piece

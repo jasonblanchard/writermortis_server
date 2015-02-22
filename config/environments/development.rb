@@ -42,4 +42,7 @@ Rails.application.configure do
     Bullet.console = true
     Bullet.rails_logger = true
   end
+
+  config.redis_host = 'localhost'
+  config.redis_port = 6379
 end

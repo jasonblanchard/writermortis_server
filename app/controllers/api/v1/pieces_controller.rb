@@ -4,10 +4,11 @@ class Api::V1::PiecesController < ApplicationController
 
   def create
     @piece = current_user.pieces.new(piece_params)
+    @create_service = Pieces::CreateService.new(@piece)
 
     authorize @piece
 
-    if @piece.save
+    if @create_service.save
       render :json => @piece
     else
       render :json => {:errors => @piece.errors.full_messages}, :status => 400

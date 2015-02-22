@@ -39,3 +39,4 @@ gem 'devise'
 gem "active_model_serializers", "~> 0.8.0"
 
 gem "pundit"
+gem "redis"

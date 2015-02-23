@@ -4,9 +4,9 @@ class RedisService
   end
 
   def publish(channel, message)
-    if @redis.connected?
+    begin
       @redis.publish channel, message
-    else
+    rescue
       Rails.logger.info "Redis not connected"
     end
   end

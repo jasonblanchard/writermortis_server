@@ -6,8 +6,9 @@ class Pieces::CreateService
 
   def save
     if piece = @piece.save
-      msg = { :resource => 'piece', :action => 'create', :data => @piece }
-      RedisService.new.publish 'rt-change', msg.to_json
+
+      # TODO Refactor this into a realtime publisher service
+      RedisService.new.publish 'rt-change', @piece.to_realtime_payload(:action => :create)
     end
 
     piece

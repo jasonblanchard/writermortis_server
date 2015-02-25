@@ -1,4 +1,6 @@
 class Piece < ActiveRecord::Base
+
+  include RealtimeUpdateable
   
   validates_presence_of :user, :story, :text
 

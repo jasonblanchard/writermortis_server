@@ -6,11 +6,9 @@ class Pieces::CreateService
 
   def save
     if piece = @piece.save
-
-      # TODO Refactor this into a realtime publisher service
-      RedisService.new.publish 'rt-change', @piece.to_realtime_payload(:action => :create)
+      # TODO How to test this is publishing a payload?
+      RealtimePublisher.new(@piece).publish(:create)
     end
-
     piece
   end
 end

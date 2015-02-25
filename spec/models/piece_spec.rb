@@ -52,7 +52,13 @@ RSpec.describe Piece, :type => :model do
   context "When sending realtime updates" do
     it "Can create an update payload" do
       payload = piece.to_realtime_payload(:action => :create)
-      expect(payload).to eq "{\"resource\":\"piece\",\"action\":\"create\",\"data\":{\"piece\":{\"id\":#{piece.id},\"story_id\":1,\"user_id\":1,\"text\":\"Once upon a time...\",\"created_at\":\"#{piece.created_at}\",\"updated_at\":\"#{piece.updated_at}\"}}}"
+      parsed_payload = JSON.parse(payload)["realtime_payload"]
+      expect(parsed_payload).to be_a Hash
+      expect(parsed_payload["action"]).to eq "create"
+      expect(parsed_payload["data"]["users"]).to be_an Array
+      expect(parsed_payload["data"]["piece"]["text"]).to eq piece.text
+      expect(parsed_payload["data"]["piece"]["story_id"]).to eq piece.story_id
+      expect(parsed_payload["data"]["piece"]["user_id"]).to eq piece.user_id
     end
   end
 end

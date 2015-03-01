@@ -4,7 +4,7 @@ class Story < ActiveRecord::Base
   validates :max_sentences, :presence => true, :numericality => { :less_than => 15 }
   validates_presence_of :user
 
-  has_many :pieces
+  has_many :pieces, :dependent => :destroy
   belongs_to :user
 
   scope :sorted, -> { order('created_at DESC') }

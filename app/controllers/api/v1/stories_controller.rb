@@ -4,7 +4,7 @@ class Api::V1::StoriesController < ApplicationController
   before_action :get_story, :only => [:show, :update, :destroy]
 
   def index
-    @stories = Story.sorted
+    @stories = Story.sorted.includes(:user)
     render :json => @stories
   end
 

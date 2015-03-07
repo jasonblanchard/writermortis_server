@@ -38,7 +38,7 @@ class Api::V1::StoriesController < ApplicationController
     authorize @story
     @story.destroy
 
-    render :json => { :deleted => true }
+    render :json => @story,  :status => 204
   end
 
   private

@@ -130,8 +130,8 @@ describe 'Stories API' do
         delete "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token
       end
 
-      it 'returns a 200 status code' do
-        expect(response.status).to eq 200
+      it 'returns a 204 status code' do
+        expect(response.status).to eq 204
       end
       it 'deletes the story' do
         expect(Story.all.count).to eq 0

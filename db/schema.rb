@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019175143) do
+ActiveRecord::Schema.define(version: 20150309001457) do
 
   create_table "pieces", force: true do |t|
     t.integer  "story_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20141019175143) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
+    t.string   "username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources 'users', :only => [:show]
       resources 'stories'
-      resources 'pieces', :only => [:create]
+      resources 'pieces', :only => [:create, :destroy]
     end
   end
 

@@ -10,4 +10,16 @@ class PiecePolicy
     # TODO Do we need this?
     !!@user
   end
+
+  def destroy?
+    is_owner?(@user, @story)
+  end
+
+  private
+
+  def is_owner?(user, resource)
+    if user
+      user.id == resource.user_id
+    end
+  end
 end

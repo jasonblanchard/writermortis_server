@@ -1,9 +1,9 @@
 describe 'Pieces API' do
+    
+  let(:story) { FactoryGirl.create(:story) }
+  let(:user) { FactoryGirl.create(:user) }
 
   describe 'create' do
-    
-    let(:story) { FactoryGirl.create(:story) }
-    let(:user) { FactoryGirl.create(:user) }
 
     context 'when the user is authorized to create a piece' do
  
@@ -46,6 +46,31 @@ describe 'Pieces API' do
 
       it 'returns 401 status code' do
         expect(response.status).to eq 401
+      end
+    end
+  end
+
+  describe 'destroy' do
+    let!(:piece) { FactoryGirl.create(:piece, :user => user, :story => story) }
+
+    context 'when the user is not authenticated' do
+      before do
+        delete "/api/v1/pieces/#{piece.id}"
+      end
+
+      it 'returns 401 status code' do
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'when the user is authenticated to destroy piece' do
+      before do
+        delete "/api/v1/pieces/#{piece.id}", :id => piece.id, :user_email => user.email, :user_token => user.authentication_token
+      end
+
+      it 'deletes the piece' do
+        expect(response.status).to eq 204
+        expect(story.pieces.count).to eq 0
       end
     end
   end

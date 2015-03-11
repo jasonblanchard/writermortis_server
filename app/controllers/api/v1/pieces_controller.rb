@@ -17,10 +17,11 @@ class Api::V1::PiecesController < ApplicationController
 
   def destroy
     @piece = Piece.find(params[:id])
+    @piece_service = Pieces::DestroyService.new(@piece)
 
     authorize @piece
 
-    @piece.destroy
+    @piece_service.destroy
 
     render :json => @piece, :status => 204
   end

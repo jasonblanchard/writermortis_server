@@ -7,7 +7,9 @@ describe Pieces::DestroyService do
     end
     
     it "calls realtime publisher" do
-      skip
+      expect_any_instance_of(RealtimePublisher).to receive(:publish).with(:destroy)
+      service = Pieces::DestroyService.new(piece)
+      service.destroy
     end
   end
 end

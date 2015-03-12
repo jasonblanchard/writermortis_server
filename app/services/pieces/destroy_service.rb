@@ -4,6 +4,8 @@ class Pieces::DestroyService
   end
 
   def destroy
-    @piece.destroy
+    piece = @piece.destroy
+    RealtimePublisher.new(@piece).publish(:destroy)
+    piece
   end
 end

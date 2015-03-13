@@ -22,4 +22,10 @@ class ApplicationController < ActionController::API
     end
   end
 
+  # Fix respond_to error
+  # https://github.com/rails-api/rails-api/issues/24
+  def self.mimes_for_respond_to
+    [1]
+  end
+
 end

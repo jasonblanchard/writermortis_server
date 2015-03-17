@@ -8,7 +8,7 @@ describe 'Pieces API' do
     context 'when the user is authorized to create a piece' do
  
       before do
-        post "/api/v1/pieces", :piece => {:text => "Once upon a time", :story_id => story.id}, :user_email => user.email, :user_token => user.authentication_token
+        post "/api/v1/pieces", {:piece => {:text => "Once upon a time", :story_id => story.id}}.merge(token_auth_for(user))
       end
 
       it 'creates the piece for the story' do
@@ -26,7 +26,7 @@ describe 'Pieces API' do
 
     context 'when there is a validation error' do
       before do
-        post "/api/v1/pieces", :piece => {:text => "" }, :user_email => user.email, :user_token => user.authentication_token
+        post "/api/v1/pieces", {:piece => {:text => "" }}.merge(token_auth_for(user))
       end
 
       it 'returns a 400 status code' do
@@ -65,7 +65,7 @@ describe 'Pieces API' do
 
     context 'when the user is authenticated to destroy piece' do
       before do
-        delete "/api/v1/pieces/#{piece.id}", :id => piece.id, :user_email => user.email, :user_token => user.authentication_token
+        delete "/api/v1/pieces/#{piece.id}", {:id => piece.id}.merge(token_auth_for(user))
       end
 
       it 'deletes the piece' do

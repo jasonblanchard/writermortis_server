@@ -10,7 +10,7 @@ class SessionsController < Devise::SessionsController
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)
         data = {
-          user_token: self.resource.authentication_token,
+          user_token: Auth::TokenAuthenticator.new(self.resource).regenerate!,
           user_email: self.resource.email,
           user_id: self.resource.id
         }

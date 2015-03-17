@@ -41,7 +41,7 @@ describe 'Stories API' do
     let(:user) { FactoryGirl.create(:user) }
 
     before do
-      post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => "This is my story" }
+      post '/api/v1/stories', {:story => {:title => "This is my story" }}.merge(token_auth_for(user))
     end
 
     it 'returns 201 status code' do
@@ -56,7 +56,7 @@ describe 'Stories API' do
 
     context 'when there is a validation error' do
       before do
-        post '/api/v1/stories', :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+        post '/api/v1/stories', {:story => {:title => ''}}.merge(token_auth_for(user))
       end
       
       it 'has a 400 status code' do
@@ -76,7 +76,7 @@ describe 'Stories API' do
     context 'when the user is not autorized to edit the story' do
 
       before do
-        patch "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token, :story => {:title => 'Updated title'}
+        patch "/api/v1/stories/#{story.id}", {:story => {:title => 'Updated title'}}.merge(token_auth_for(user2))
       end
 
       let(:user2) { FactoryGirl.create(:user) }
@@ -93,7 +93,7 @@ describe 'Stories API' do
     context 'when the user is authorized to edit the story' do
 
       before do
-        patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => 'Updated title'}
+        patch "/api/v1/stories/#{story.id}", {:story => {:title => 'Updated title'}}.merge(token_auth_for(user))
       end
 
       it 'returns a 200 status code' do
@@ -107,7 +107,7 @@ describe 'Stories API' do
 
       context 'when there is a validation error' do
         before do
-          patch "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token, :story => {:title => ''}
+          patch "/api/v1/stories/#{story.id}", {:story => {:title => ''}}.merge(token_auth_for(user))
         end
 
         it 'returns a 400 status code' do
@@ -127,7 +127,7 @@ describe 'Stories API' do
 
     context 'when the user is authorized to delete the story' do
       before do
-        delete "/api/v1/stories/#{story.id}", :user_email => user.email, :user_token => user.authentication_token
+        delete "/api/v1/stories/#{story.id}", token_auth_for(user)
       end
 
       it 'returns a 204 status code' do
@@ -142,7 +142,7 @@ describe 'Stories API' do
       let(:user2) { FactoryGirl.create(:user) }
 
       it 'returns 401 status code' do
-        delete "/api/v1/stories/#{story.id}", :user_email => user2.email, :user_token => user2.authentication_token
+        delete "/api/v1/stories/#{story.id}", token_auth_for(user2)
 
         expect(response.status).to eq 401
       end

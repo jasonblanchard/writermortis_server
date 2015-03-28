@@ -7,7 +7,7 @@ describe "Registrations API" do
       it 'returns the errors and a status code' do
         post '/api/v1/registrations', {:registration => {:email => user.email, :username => "baduser", :password => 'testpass', :password_confirmation => 'testpass'}}
 
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['errors']['email']).to include 'has already been taken'
       end
     end
@@ -16,7 +16,7 @@ describe "Registrations API" do
       it 'returns the errors and a status code' do
         post '/api/v1/registrations', {:registration => {:email => 'newuser@example.com', :username => "newuser", :password => 'testpass', :password_confirmation => 'testpazzzzzz'}}
 
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['errors']['password_confirmation']).to include "doesn't match Password"
       end
     end

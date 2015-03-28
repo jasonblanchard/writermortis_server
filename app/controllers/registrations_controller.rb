@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
     if @user.save
       render :json => @user
     else
-      render :json => {:errors => @user.errors.full_messages}, :status => 400
+      render :json => {:errors => @user.errors}, :status => 400
     end
   end
 

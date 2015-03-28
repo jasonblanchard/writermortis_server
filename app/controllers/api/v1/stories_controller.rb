@@ -18,7 +18,7 @@ class Api::V1::StoriesController < ApplicationController
     if @story.save
       render :json => @story, :status => 201
     else
-      render :json => { :errors => @story.errors.full_messages }, :status => 400
+      render :json => { :errors => @story.errors }, :status => 422
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::StoriesController < ApplicationController
     if @story.save
       render :json => @story
     else
-      render :json => { :errors => @story.errors.full_messages }, :status => 400
+      render :json => { :errors => @story.errors }, :status => 422
     end
   end
 

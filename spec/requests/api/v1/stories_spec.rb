@@ -59,12 +59,12 @@ describe 'Stories API' do
         post '/api/v1/stories', {:story => {:title => ''}}.merge(token_auth_for(user))
       end
       
-      it 'has a 400 status code' do
-        expect(response.status).to eq 400
+      it 'has an error status code' do
+        expect(response.status).to eq 422
       end
 
       it 'returns an errors object' do
-        expect(json['errors']).to be_a Array
+        expect(json['errors']).to be_a Hash
       end
     end
   end
@@ -110,12 +110,12 @@ describe 'Stories API' do
           patch "/api/v1/stories/#{story.id}", {:story => {:title => ''}}.merge(token_auth_for(user))
         end
 
-        it 'returns a 400 status code' do
-          expect(response.status).to eq 400
+        it 'returns an error status code' do
+          expect(response.status).to eq 422
         end
 
         it 'returns an errors object' do
-          expect(json['errors']).to be_a Array
+          expect(json['errors']).to be_a Hash
         end
       end
     end

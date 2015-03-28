@@ -11,7 +11,7 @@ class Api::V1::PiecesController < ApplicationController
     if @create_service.save
       render :json => @piece
     else
-      render :json => {:errors => @piece.errors.full_messages}, :status => 400
+      render :json => {:errors => @piece.errors},:status => 422
     end
   end
 

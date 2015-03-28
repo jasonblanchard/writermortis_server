@@ -29,12 +29,12 @@ describe 'Pieces API' do
         post "/api/v1/pieces", {:piece => {:text => "" }}.merge(token_auth_for(user))
       end
 
-      it 'returns a 400 status code' do
-        expect(response.status).to eq 400
+      it 'returns a 401 status code' do
+        expect(response.status).to eq 422
       end
 
       it 'returns an errors object' do
-        expect(json['errors']).to be_a Array
+        expect(json['errors']).to be_a Hash
       end
     end
 

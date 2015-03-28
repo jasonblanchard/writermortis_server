@@ -4,9 +4,13 @@ Rails.application.routes.draw do
   
   devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations' }, :path => "api/v1/users"
 
+  devise_scope :user do
+    post 'api/v1/registrations' => 'registrations#create'
+  end
+
   namespace :api, :defaults => { :format => :json } do
     namespace :v1 do
-      resources 'users', :only => [:show, :create]
+      resources 'users', :only => [:show]
       resources 'stories'
       resources 'pieces', :only => [:create, :destroy]
     end

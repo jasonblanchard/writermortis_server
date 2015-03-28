@@ -16,3 +16,4 @@
 /tmp
 secret_token.rb
 coverage
+.DS_Store

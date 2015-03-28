@@ -2,11 +2,11 @@ Rails.application.routes.draw do
   
   match '*path', :controller => 'application', :action => 'handle_options_request', via: [:options]
   
-  devise_for :users, controllers: { sessions: 'sessions' }, :path => "api/v1/users"
+  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations' }, :path => "api/v1/users"
 
   namespace :api, :defaults => { :format => :json } do
     namespace :v1 do
-      resources 'users', :only => [:show]
+      resources 'users', :only => [:show, :create]
       resources 'stories'
       resources 'pieces', :only => [:create, :destroy]
     end

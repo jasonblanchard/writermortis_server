@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :stories
   has_many :pieces
 
-  validates :username, :uniqueness => true, :format => {:with => /\A[a-zA-Z\d\s]*\z/}
+  validates :username, :uniqueness => true, :format => {:with => /\A[a-zA-Z\d\s]*\z/}, :presence => true
 
   before_save :ensure_authentication_token
 

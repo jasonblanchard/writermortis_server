@@ -10,7 +10,9 @@ group :development do
   gem "bullet"
 end
 
-gem 'sqlite3'
+group :production do
+  'pg'
+end
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -26,6 +28,7 @@ group :test, :development do
   gem 'capybara'
   gem 'database_cleaner'
   gem "byebug"
+  gem 'sqlite3'
 end
 
 group :test do
@@ -39,3 +42,5 @@ gem 'devise'
 gem "active_model_serializers", "~> 0.8.0"
 
 gem "pundit"
+
+gem 'rails_12factor', group: :production

@@ -11,7 +11,7 @@ group :development do
 end
 
 group :production do
-  'pg'
+  gem 'pg'
 end
 
 # Use unicorn as the app server

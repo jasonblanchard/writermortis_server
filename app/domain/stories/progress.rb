@@ -1,4 +1,4 @@
-class Story
+class Stories
   class Progress
     def initialize(story)
       @story = story

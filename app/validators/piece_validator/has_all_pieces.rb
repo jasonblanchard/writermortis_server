@@ -9,7 +9,7 @@ class PieceValidator::HasAllPieces < ActiveModel::Validator
   private
 
   def story_is_already_complete?(piece)
-    Story::Progress.new(piece.story).complete?
+    Stories::Progress.new(piece.story).complete?
   end
 
 end

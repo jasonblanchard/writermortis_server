@@ -2,7 +2,7 @@ class IndexController < ApplicationController
 
   def index
     index_key = params[:index_key]
-    render :html => bootstrap_index(index_key)
+    render :text => bootstrap_index(index_key)
   end
 
   private

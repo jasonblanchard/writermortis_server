@@ -9,9 +9,14 @@ class PieceValidator::PostedLast < ActiveModel::Validator
   private
 
   def user_posted_last_piece?(piece)
-    if piece.story && !piece.story.pieces.empty?
-      # FIXME Ugh...
-      piece.story.reload.pieces.last.user == piece.user
+    
+    if piece.story_id
+      story = Story.where(:id => piece.story_id).includes(:pieces).first
+      pieces = story.pieces
+    end
+
+    if story && !pieces.empty?
+      story.pieces.last.user_id == piece.user_id
     else
       false
     end

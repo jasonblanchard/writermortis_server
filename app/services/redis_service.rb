@@ -10,4 +10,12 @@ class RedisService
       Rails.logger.info "Redis not connected"
     end
   end
+
+  def get(key)
+    begin
+      @redis.get(key)
+    rescue
+      nil
+    end
+  end
 end

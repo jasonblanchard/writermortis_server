@@ -8,8 +8,9 @@ class IndexController < ApplicationController
   private
 
   def bootstrap_index(index_key)
-    index_key ||= $redis.get('writermortis:current')
-    $redis.get(index_key)
+    redis = RedisService.new
+    index_key ||= redis.get('writermortis:current')
+    redis.get(index_key) || 'Cannot find index'
   end
 
 end

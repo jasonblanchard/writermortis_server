@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby "2.2.1"
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.1'
 
 gem 'rails-api'
 
@@ -36,7 +36,6 @@ group :test do
   gem 'simplecov', :require => false
 end
 
-gem 'byebug', :group => :development
 gem 'redis'
 gem 'devise'
 
